@@ -1,43 +1,47 @@
 import express from "express";
 
-const router = express.Router();
+import { PostModel } from "../models";
 
-import Post from "../models/Post";
+const postsRoute = express.Router();
 
-router.get('/', async (req, res) => {
+// GET POSTS
+postsRoute.get('/', async (req, res) => {
   try {
-    const posts = await Post.find();
+    const posts = await PostModel.find();
     res.json(posts);
   } catch (err) {
     res.json({ message: err })
   }
 });
 
-router.post('/', async (req, res) => {
-  const post = new Post({
+// POST POST
+postsRoute.post('/', async (req, res) => {
+  const post = new PostModel({
     title: req.body.title,
-    description: req.body.description, 
+    description: req.body.description,
   })
   try {
     const savedPost = await post.save();
     res.json(savedPost);
   } catch (err) {
-    res.json({message: err})
+    res.json({ message: err })
   }
 });
 
-router.get('/:postId', async (req, res) => {
+// GET POST
+postsRoute.get('/:postId', async (req, res) => {
   try {
-    const post = await Post.findById(req.params.postId);
+    const post = await PostModel.findById(req.params.postId);
     res.json(post);
   } catch (err) {
     res.json({ message: err })
   }
 });
 
-router.delete('/:postId', async (req, res) => {
+// DELETE POST
+postsRoute.delete('/:postId', async (req, res) => {
   try {
-    const removedPost = await Post.findOneAndRemove({
+    const removedPost = await PostModel.findOneAndRemove({
       _id: req.params.postId
     });
     res.json(removedPost);
@@ -46,9 +50,10 @@ router.delete('/:postId', async (req, res) => {
   }
 });
 
-router.patch('/:postId', async (req, res) => {
+// UPDATE POST
+postsRoute.patch('/:postId', async (req, res) => {
   try {
-    const updatedPost = await Post.findOneAndUpdate({
+    const updatedPost = await PostModel.findOneAndUpdate({
       _id: req.params.postId
     }, {
       $set: {
@@ -61,4 +66,4 @@ router.patch('/:postId', async (req, res) => {
   }
 });
 
-export default router;
+export { postsRoute };

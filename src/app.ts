@@ -1,27 +1,29 @@
-import express from "express";
-const app = express();
-import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
+import express from "express";
+import mongoose from "mongoose";
 import "dotenv/config";
 
-// Middlewares
+import { postsRoute } from "./routes";
+
+const app = express();
+
+// MIDDLEWARES
 app.use(cors());
 app.use(bodyParser.json());
 
-// Import Routes
-import postsRoute from "./routes/posts";
-
+// ROUTES
 app.use("/posts", postsRoute);
 
-// ROUTES
-app.get('/', (req, res) => {
-  res.send('We are on home');
+// CONNECT TO DATABASE
+mongoose.connect(process.env.DB_CONNECTION || "")
+  .then(() => {
+    console.log(`DB is connected correctly -> ${process.env.DB_CONNECTION}`)
+  })
+  .catch((error) => {
+    console.log('Error in the database connection -> ', error);
+  });
+
+app.listen(process.env.PORT, () => {
+  console.log(`Port is listening successfully -> :${process.env.PORT}`);
 });
-
-// Connect To DB
-const CONNECTION = process.env.DB_CONNECTION || "";
-mongoose.connect(CONNECTION);
-
-// How to we start listening to the server
-app.listen(4000);
