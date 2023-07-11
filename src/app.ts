@@ -4,7 +4,7 @@ import express from "express";
 import mongoose from "mongoose";
 import "dotenv/config";
 
-import { postsRoute } from "./routes";
+import { ticketsRoute } from "./routes";
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // ROUTES
-app.use("/posts", postsRoute);
+app.use("/tickets", ticketsRoute);
 
 // CONNECT TO DATABASE
 mongoose.connect(process.env.DB_CONNECTION || "")

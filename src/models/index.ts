@@ -1,1 +1,1 @@
-export { PostModel } from "./Post";
+export { TicketModel } from "./Ticket";

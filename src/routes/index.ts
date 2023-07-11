@@ -1,1 +1,1 @@
-export { postsRoute } from "./posts";
+export { ticketsRoute } from "./tickets";
