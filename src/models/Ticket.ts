@@ -6,8 +6,7 @@ const TicketSchema = new mongoose.Schema({
     required: true
   },
   issue: {
-    type: String,
-    required: true
+    type: String
   },
   status: {
     type: String,

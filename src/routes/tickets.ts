@@ -7,8 +7,8 @@ const ticketsRoute = express.Router();
 // GET TICKETS
 ticketsRoute.get('/', async (req, res) => {
   try {
-    const tickets = await TicketModel.find();
-    res.json(tickets);
+    const ticketsFound = await TicketModel.find();
+    res.json(ticketsFound);
   } catch (error) {
     res.json({ message: error })
   }
@@ -23,8 +23,8 @@ ticketsRoute.post('/', async (req, res) => {
     deadline: req.body.deadline
   })
   try {
-    const savedTicket = await ticket.save();
-    res.json(savedTicket);
+    const ticketSaved = await ticket.save();
+    res.json(ticketSaved);
   } catch (error) {
     res.json({ message: error })
   }
@@ -33,8 +33,8 @@ ticketsRoute.post('/', async (req, res) => {
 // GET TICKET
 ticketsRoute.get('/:ticketId', async (req, res) => {
   try {
-    const ticket = await TicketModel.findById(req.params.ticketId);
-    res.json(ticket);
+    const ticketFound = await TicketModel.findById(req.params.ticketId);
+    res.json(ticketFound);
   } catch (error) {
     res.json({ message: error })
   }
@@ -43,10 +43,10 @@ ticketsRoute.get('/:ticketId', async (req, res) => {
 // DELETE TICKET
 ticketsRoute.delete('/:ticketId', async (req, res) => {
   try {
-    const removedTicket = await TicketModel.findOneAndRemove({
+    const ticketRemoved = await TicketModel.findOneAndRemove({
       _id: req.params.ticketId
     });
-    res.json(removedTicket);
+    res.json(ticketRemoved);
   } catch (error) {
     res.json({ message: error })
   }
@@ -55,7 +55,7 @@ ticketsRoute.delete('/:ticketId', async (req, res) => {
 // UPDATE TICKET
 ticketsRoute.patch('/:ticketId', async (req, res) => {
   try {
-    const updatedTicket = await TicketModel.findOneAndUpdate({
+    await TicketModel.findOneAndUpdate({
       _id: req.params.ticketId
     }, {
       $set: {
@@ -65,7 +65,8 @@ ticketsRoute.patch('/:ticketId', async (req, res) => {
         deadline: req.body.deadline
       }
     });
-    res.json(updatedTicket);
+    const ticketFound = await TicketModel.findById(req.params.ticketId);
+    res.json(ticketFound);
   } catch (error) {
     res.json({ message: error })
   }
