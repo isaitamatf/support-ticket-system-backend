@@ -6,8 +6,12 @@
   "scripts": {
     "start": "ts-node ./src/app.ts"
   },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/isaitamatf/support-ticket-system-backend"
+  },
   "keywords": [],
-  "author": "",
+  "author": "Isaac Batista",
   "license": "ISC",
   "devDependencies": {
     "@babel/preset-env": "^7.22.5",
